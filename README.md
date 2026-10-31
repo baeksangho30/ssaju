@@ -37,3 +37,12 @@ python -m http.server 8765
 ```bash
 python scripts/build_signal.py
 ```
+
+## 매매 비교 (`backtest.html`)
+
+삼성전자·SK하이닉스·NAVER에 일곱 가지 사고팔기 방법을 [backtesting.py](https://github.com/kernc/backtesting.py)로 돌린 결과표와, 방법마다 사고판 자리를 찍은 차트.
+화면은 계산하지 않고 `data/backtest.json`(내 컴퓨터에서 실제로 돌린 결과)만 보여 줌.
+
+```bash
+python scripts/backtest.py
+```

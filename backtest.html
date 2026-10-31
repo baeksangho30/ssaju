@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>매매 방법 비교</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      const t = localStorage.getItem("ohaeng-theme");
+      if (t && t !== "base") document.documentElement.dataset.theme = t;
+    } catch {}
+  </script>
+</head>
+<body>
+  <nav class="themebar" aria-label="디자인 고르기">
+    <div class="wrap">
+      <span>디자인 고르기</span>
+      <div class="themes" id="themes">
+        <button type="button" data-theme="base">기본</button>
+        <button type="button" data-theme="bmw">BMW</button>
+        <button type="button" data-theme="nvidia">NVIDIA</button>
+        <button type="button" data-theme="ferrari">Ferrari</button>
+      </div>
+      <div class="pagelinks">
+        <a href="index.html">오행 종목</a>
+        <a href="signal.html">신호 차트</a>
+        <a href="backtest.html" aria-current="page">매매 비교</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="top">
+    <div class="wrap">
+      <h1>이렇게 샀으면 얼마 벌었을까?</h1>
+      <p class="lead">삼성전자·SK하이닉스·NAVER에 일곱 가지 사고팔기 방법을 똑같은 조건으로 돌려 본 결과예요. 표에서 줄을 누르면 아래 차트에 그 방법으로 사고판 자리가 찍혀요.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel sig">
+      <p class="source" id="source">결과를 불러오는 중이에요…</p>
+      <p class="bt-problems" id="problems" hidden></p>
+
+      <div class="bt-table-wrap">
+        <table class="bt-table" id="table">
+          <thead>
+            <tr><th>방법</th><th>수익률</th><th>번 돈</th><th>제일 많이 빠졌을 때</th><th>사고판 횟수</th><th>이긴 횟수</th><th>첫 매수일</th></tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <h2 class="bt-title" id="chartTitle"></h2>
+      <div class="sig-bar">
+        <div class="ranges" id="ranges">
+          <button type="button" data-years="1">1년</button>
+          <button type="button" data-years="3">3년</button>
+          <button type="button" data-years="0" aria-pressed="true">전체</button>
+        </div>
+        <p class="ma-legend"><b class="up">▲ 산 날</b> <b class="down">▼ 판 날</b></p>
+      </div>
+      <div class="chart-box" id="chartBox">
+        <div class="tip" id="tip" hidden></div>
+      </div>
+
+      <details class="rules" id="fillsBox">
+        <summary>거래 내역 보기</summary>
+        <div class="bt-table-wrap"><table class="bt-fills" id="fills"></table></div>
+      </details>
+
+      <details class="rules">
+        <summary>일곱 가지 방법과 계산 조건</summary>
+        <ol class="sig-rules" id="ruleList"></ol>
+        <ul class="sig-rules" id="conditions"></ul>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>주가: <a href="https://github.com/FinanceData/FinanceDataReader" target="_blank" rel="noopener">FinanceDataReader</a> · 계산: <a href="https://github.com/kernc/backtesting.py" target="_blank" rel="noopener">backtesting.py</a> (AGPL-3.0, 내 컴퓨터에서 돌린 결과 숫자만 올림) · 차트: <a href="https://github.com/tradingview/lightweight-charts" target="_blank" rel="noopener">TradingView Lightweight Charts</a> (Apache-2.0)</p>
+    <p>지난 주가로 계산한 결과일 뿐이고, 앞으로도 이렇게 된다는 뜻이 아니에요. 투자 권유가 아니에요.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@5.0.9/dist/lightweight-charts.standalone.production.js"></script>
+  <script type="module" src="backtest.js"></script>
+</body>
+</html>
