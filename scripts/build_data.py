@@ -3,7 +3,7 @@
 RS 점수는 https://dalinaum.github.io/rs/ 에 게시된 HTML 표를 읽기만 한다
 (그 저장소의 코드는 가져오거나 실행하지 않는다).
 
-    pip install -r requirements.txt
+    pip install -r scripts/requirements.txt
     python scripts/build_data.py
 """
 
