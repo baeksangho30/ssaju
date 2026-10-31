@@ -25,3 +25,15 @@ python scripts/build_data.py
 ```bash
 python -m http.server 8765
 ```
+
+## 신호 차트 (`signal.html`)
+
+삼성전자(005930) 최근 5년 일봉에 ▲ 골든크로스(5일선이 20일선 위로), ★ 1년 최고가를 처음 다시 넘긴 날, W 쌍바닥 완성을 표시합니다.
+
+- 주가: FinanceDataReader `DataReader` 일봉 → `data/005930.json` (20일선·1년 최고가 계산용으로 1년치를 더 받아 둠)
+- 차트: [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts) 5.0.9 (Apache-2.0, jsDelivr)
+- 신호 계산과 쌍바닥 기준(바닥 차이 3% 이내, 10~60거래일, 가운데 10% 이상 반등): `signals.js`
+
+```bash
+python scripts/build_signal.py
+```

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>신호 차트</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      const t = localStorage.getItem("ohaeng-theme");
+      if (t && t !== "base") document.documentElement.dataset.theme = t;
+    } catch {}
+  </script>
+</head>
+<body>
+  <nav class="themebar" aria-label="디자인 고르기">
+    <div class="wrap">
+      <span>디자인 고르기</span>
+      <div class="themes" id="themes">
+        <button type="button" data-theme="base">기본</button>
+        <button type="button" data-theme="bmw">BMW</button>
+        <button type="button" data-theme="nvidia">NVIDIA</button>
+        <button type="button" data-theme="ferrari">Ferrari</button>
+      </div>
+      <a class="pagelink" href="index.html">← 오행 체력 종목</a>
+    </div>
+  </nav>
+
+  <header class="top">
+    <div class="wrap">
+      <h1>삼성전자 신호 차트</h1>
+      <p class="lead">최근 5년 일봉에 ▲ 골든크로스, ★ 1년 최고가 돌파, W 쌍바닥 완성을 표시했어요. 표시를 누르면 그날 날짜와 가격이 떠요.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel sig">
+      <p class="source" id="source">주가를 불러오는 중이에요…</p>
+
+      <div class="sig-toggles" id="toggles"></div>
+
+      <div class="sig-bar">
+        <div class="ranges" id="ranges">
+          <button type="button" data-months="3">3개월</button>
+          <button type="button" data-months="12" aria-pressed="true">1년</button>
+          <button type="button" data-months="60">5년</button>
+        </div>
+        <p class="ma-legend"><i class="ma5"></i>5일선 <i class="ma20"></i>20일선</p>
+      </div>
+
+      <div class="chart-box" id="chartBox">
+        <div class="tip" id="tip" hidden></div>
+      </div>
+
+      <details class="rules">
+        <summary>신호를 이렇게 정했어요</summary>
+        <ul class="sig-rules">
+          <li><b>▲ 골든크로스</b> — 전날은 5일선(종가 5일 평균)이 20일선 아래거나 같았는데, 그날 20일선 위로 올라선 날.</li>
+          <li><b>★ 1년 최고가 돌파</b> — 그날 고가가 직전 1년(365일) 동안의 최고가를 넘긴 날 중, 전날은 넘기지 못했던 날만(처음 다시 넘긴 날). <span id="starAll"></span></li>
+          <li><b>W 쌍바닥 완성</b> — 앞뒤 3거래일 중 가장 낮은 저가를 바닥으로 보고, 두 바닥이 아래 조건을 모두 맞춘 뒤 종가가 가운데 봉우리(목선)를 넘긴 날.
+            <ul>
+              <li>두 바닥 저가 차이가 첫 바닥의 3% 이내</li>
+              <li>두 바닥 사이가 10~60거래일</li>
+              <li>가운데 봉우리(고가)가 첫 바닥보다 10% 이상 높음</li>
+              <li>두 바닥 사이에 두 바닥보다 더 낮은 날이 없음</li>
+              <li>두 번째 바닥 뒤 60거래일 안에, 바닥 밑으로 깨지지 않고 목선을 넘김</li>
+            </ul>
+          </li>
+        </ul>
+        <p class="note">기준 숫자는 <code>signals.js</code> 맨 위에 모여 있어요.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>주가: <a href="https://github.com/FinanceData/FinanceDataReader" target="_blank" rel="noopener">FinanceDataReader</a> 일봉 · 차트: <a href="https://github.com/tradingview/lightweight-charts" target="_blank" rel="noopener">TradingView Lightweight Charts</a> (Apache-2.0)</p>
+    <p>지난 주가에 규칙대로 표시만 한 것이고, 투자 권유가 아니에요.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@5.0.9/dist/lightweight-charts.standalone.production.js"></script>
+  <script type="module" src="signal.js"></script>
+</body>
+</html>
