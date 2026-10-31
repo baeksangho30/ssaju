@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>오행 체력 종목</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // 고른 디자인을 그리기 전에 먼저 적용해서 새로고침 때 깜빡이지 않게 한다.
+    try {
+      const t = localStorage.getItem("ohaeng-theme");
+      if (t && t !== "base") document.documentElement.dataset.theme = t;
+    } catch {}
+  </script>
+</head>
+<body>
+  <nav class="themebar" aria-label="디자인 고르기">
+    <div class="wrap">
+      <span>디자인 고르기</span>
+      <div class="themes" id="themes">
+        <button type="button" data-theme="base">기본</button>
+        <button type="button" data-theme="bmw">BMW</button>
+        <button type="button" data-theme="nvidia">NVIDIA</button>
+        <button type="button" data-theme="ferrari">Ferrari</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="top">
+    <div class="wrap">
+      <h1>내 사주에 부족한 기운,<br>요즘 힘센 종목으로 채워 볼까?</h1>
+      <p class="lead">태어난 날과 시간으로 오행을 세고, 부족한 오행에 어울리는 업종에서 체력 점수(RS) 80점 넘는 코스피 종목을 골라 드려요.</p>
+    </div>
+  </header>
+
+  <main>
+    <form id="form" class="panel form">
+      <label class="field wide">
+        <span>이름</span>
+        <input id="name" type="text" maxlength="12" placeholder="예: 홍길동" required>
+      </label>
+
+      <div class="field wide">
+        <span>달력</span>
+        <div class="seg" role="radiogroup">
+          <label><input type="radio" name="cal" value="solar" checked><b>양력</b></label>
+          <label><input type="radio" name="cal" value="lunar"><b>음력</b></label>
+        </div>
+        <label class="leap" hidden><input id="leap" type="checkbox"> 윤달이에요</label>
+      </div>
+
+      <div class="field wide">
+        <span>태어난 날</span>
+        <div class="date">
+          <input id="y" type="number" inputmode="numeric" min="1900" max="2049" placeholder="1990" required><em>년</em>
+          <select id="m" required></select><em>월</em>
+          <select id="d" required></select><em>일</em>
+        </div>
+      </div>
+
+      <label class="field wide">
+        <span>태어난 시간</span>
+        <input id="t" type="time" value="12:00" required>
+      </label>
+
+      <p id="err" class="err" hidden></p>
+      <button class="go" type="submit">사주 보고 종목 고르기</button>
+    </form>
+
+    <div id="result" hidden>
+      <!-- 재미 구역 -->
+      <section class="fun">
+        <div class="badge fun-badge">🔮 재미로 보는 거예요</div>
+        <h2><span id="who"></span>님의 사주 오행</h2>
+        <p class="sub" id="birth"></p>
+
+        <div class="pillars" id="pillars"></div>
+
+        <div class="bars" id="bars"></div>
+
+        <div class="lack" id="lack"></div>
+
+        <details class="rules" id="rules">
+          <summary>오행이랑 업종을 이렇게 짝지었어요</summary>
+          <p class="note">상장회사 목록(KRX-DESC)의 <b>업종 이름</b>에 들어 있는 낱말로 오행을 정했어요. 오행별 업종 짝짓기는 흔히 쓰는 연상(나무·불·흙·쇠·물)을 따른 재미용 규칙이에요.</p>
+          <div id="ruleList"></div>
+        </details>
+      </section>
+
+      <!-- 실제 숫자 구역 -->
+      <section class="real">
+        <div class="badge real-badge">📈 여기부터는 실제 주식 숫자예요</div>
+        <h2 id="realTitle"></h2>
+        <p class="source" id="source"></p>
+        <div class="cards" id="cards"></div>
+        <p class="note" id="realNote"></p>
+      </section>
+
+      <!-- 자랑 카드 -->
+      <section class="share">
+        <h2>단톡방 자랑 카드</h2>
+        <div class="brag" id="brag"></div>
+        <div class="share-btns">
+          <button type="button" id="save">🖼️ 그림으로 저장</button>
+          <button type="button" id="copy">🔗 링크 복사</button>
+        </div>
+        <p class="toast" id="toast" hidden></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p>사주 계산: <a href="https://github.com/golbin/ssaju" target="_blank" rel="noopener">ssaju</a> (MIT) · 체력 점수: <a id="footSrc" href="https://dalinaum.github.io/rs/" target="_blank" rel="noopener">달리나음의 코스피 상대 강도</a>에 공개된 점수 · 업종: <a href="https://github.com/FinanceData/FinanceDataReader" target="_blank" rel="noopener">FinanceDataReader</a> KRX-DESC · 1년 주가 그래프: FinanceDataReader 종가</p>
+    <p>사주는 재미용이고, 이 화면의 어떤 내용도 투자 권유가 아니에요.</p>
+    <p>디자인 참고: <a href="https://github.com/VoltAgent/awesome-design-md" target="_blank" rel="noopener">awesome-design-md</a> (MIT)의 BMW·NVIDIA·Ferrari 설명. 브랜드 글꼴은 공개 글꼴이 아니라 설명서에 적힌 대체 글꼴(Inter)과 Noto Sans KR을 써요. 각 회사와는 관계없어요.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
